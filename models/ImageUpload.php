@@ -14,7 +14,7 @@ class ImageUpload extends Model
     {
         return [
             [['image'], 'required'],
-            [['image'], 'file', 'extensions' => 'jpeg, png,jpg']
+            [['image'], 'file', 'extensions' => 'jpeg, png, jpg']
         ];
     }
 
@@ -28,11 +28,6 @@ class ImageUpload extends Model
 
             return $this->saveImage();
         }
-    }
-
-    private function getFolder(): string
-    {
-        return Yii::getAlias('@web') . 'uploads/';
     }
 
     private function generateFileName(): string
@@ -50,12 +45,18 @@ class ImageUpload extends Model
 
     private function fileExists($current_image)
     {
-        if (!empty($current_image )){
-            return is_file($this->getFolder() . $current_image) && file_exists($this->getFolder() . $current_image);
+        if (!empty($current_image)) {
+            return file_exists($this->getFolder() . $current_image) && is_file($this->getFolder() . $current_image);
         }
     }
 
-    private function saveImage(): string
+    private function getFolder(): string
+    {
+        return Yii::getAlias('@web') . 'uploads/';
+    }
+
+
+    private function saveImage()
     {
         $file_name = $this->generateFileName();
 

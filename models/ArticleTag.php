@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "article_tag".
@@ -14,7 +15,7 @@ use Yii;
  * @property Article $article
  * @property Tag $tag
  */
-class ArticleTag extends \yii\db\ActiveRecord
+class ArticleTag extends ActiveRecord
 {
     /**
      * {@inheritdoc}

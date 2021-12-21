@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "tag".
@@ -12,19 +12,14 @@ use Yii;
  *
  * @property ArticleTag[] $articleTags
  */
-class Tag extends \yii\db\ActiveRecord
+class Tag extends ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public static function tableName()
     {
         return 'tag';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
@@ -32,9 +27,6 @@ class Tag extends \yii\db\ActiveRecord
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -44,12 +36,11 @@ class Tag extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[ArticleTags]].
-     *
-     * @return \yii\db\ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
-    public function getArticleTags()
+    public function getArticles()
     {
-        return $this->hasMany(ArticleTag::className(), ['tag_id' => 'id']);
+        return $this->hasMany(Article::class, ['id' => 'article_id'])
+            ->viaTable('article_tag', ['tag_id' => 'id']);
     }
 }

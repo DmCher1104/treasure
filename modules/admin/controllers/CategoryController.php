@@ -8,14 +8,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * CategoryController implements the CRUD actions for Category model.
- */
 class CategoryController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
+
     public function behaviors()
     {
         return array_merge(
@@ -31,10 +26,6 @@ class CategoryController extends Controller
         );
     }
 
-    /**
-     * Lists all Category models.
-     * @return mixed
-     */
     public function actionIndex()
     {
         $searchModel = new CategorySearch();
@@ -59,11 +50,6 @@ class CategoryController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Category model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
     public function actionCreate()
     {
         $model = new Category();

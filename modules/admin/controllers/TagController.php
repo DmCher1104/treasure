@@ -8,14 +8,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-/**
- * TagController implements the CRUD actions for Tag model.
- */
 class TagController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
+
     public function behaviors()
     {
         return array_merge(
@@ -31,10 +26,6 @@ class TagController extends Controller
         );
     }
 
-    /**
-     * Lists all Tag models.
-     * @return mixed
-     */
     public function actionIndex()
     {
         $searchModel = new TagSearch();
@@ -59,11 +50,6 @@ class TagController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Tag model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
     public function actionCreate()
     {
         $model = new Tag();
