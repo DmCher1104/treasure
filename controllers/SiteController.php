@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\Article;
+use app\models\Category;
 use app\models\ContactForm;
 use app\models\LoginForm;
 use Yii;
@@ -50,7 +52,19 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $data = Article::getAll(2);
+
+        $popular_articles = Article::getPopular();
+        $last_articles = Article::getLast();
+        $categories = Category::getAll();
+
+        return $this->render('index', [
+            'articles' => $data['articles'],
+            'pages' => $data['pagination'],
+            'popular_articles' => $popular_articles,
+            'last_articles' => $last_articles,
+            'categories' => $categories,
+        ]);
     }
 
     public function actionLogin()
@@ -95,13 +109,39 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    public function actionView (){
+    public function actionView($id)
+    {
+        $article = Article::find()->where(['id' => $id])->one();
 
-        return $this->render('single-post');
+
+        $popular_articles = Article::getPopular();
+        $last_articles = Article::getLast();
+        $categories = Category::getAll();
+
+        return $this->render('single-post', [
+            'article' => $article,
+            'popular_articles' => $popular_articles,
+            'last_articles' => $last_articles,
+            'categories' => $categories,
+        ]);
     }
 
-    public function actionCategory(){
+    public function actionCategory($id)
+    {
 
-      return  $this->render('category');
+        $data = Category::getArticlesByCategory($id);
+
+        $popular_articles = Article::getPopular();
+        $last_articles = Article::getLast();
+        $categories = Category::getAll();
+
+        return $this->render('category', [
+            'articles' => $data['articles'],
+            'pages' => $data['pagination'],
+            'popular_articles' => $popular_articles,
+            'last_articles' => $last_articles,
+            'categories' => $categories,
+
+        ]);
     }
 }

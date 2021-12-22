@@ -5,8 +5,6 @@ namespace app\models;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "tag".
- *
  * @property int $id
  * @property string|null $title
  *

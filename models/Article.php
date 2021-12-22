@@ -3,12 +3,11 @@
 namespace app\models;
 
 use Yii;
+use yii\data\Pagination;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
 /**
- * This is the model class for table "article".
- *
  * @property int $id
  * @property string|null $title
  * @property string|null $description
@@ -31,6 +30,7 @@ class Article extends ActiveRecord
         return 'article';
     }
 
+
     public function rules()
     {
         return [
@@ -38,7 +38,7 @@ class Article extends ActiveRecord
             [['title', 'description', 'content'], 'string'],
 //            [['date'], 'date', 'format' => 'php:Y-m-d'],  // м.б стоит убрать присвоение даты
             [['date'], 'default', 'value' => date('Y-m-d h-m')], //дефолт знач для даты (тек дата)
-            [['title'], 'string', 'min'=>3 ,'max' => 255],
+            [['title'], 'string', 'min' => 3, 'max' => 255],
         ];
     }
 
@@ -133,5 +133,36 @@ class Article extends ActiveRecord
         ArticleTag::deleteAll(['article_id' => $this->id]);
     }
 
+    /**
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function getDate()
+    {
+        return Yii::$app->formatter->asDate($this->date);
+    }
+
+    public static function getAll($pageSize = 3)
+    {
+        $query = Article::find();
+
+        $countQuery = clone $query;
+        $pagination = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $pageSize]);
+
+        $articles = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return ['articles' => $articles, 'pagination' => $pagination];
+    }
+
+    public static function getPopular()
+    {
+        return Article::find()->orderBy('viewed desc')->limit(3)->all();
+    }
+
+    public static function getLast()
+    {
+        return Article::find()->orderBy('viewed desc')->limit(3)->all();
+    }
 
 }
