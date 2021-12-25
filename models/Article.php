@@ -165,4 +165,11 @@ class Article extends ActiveRecord
         return Article::find()->orderBy('viewed desc')->limit(3)->all();
     }
 
+    public function saveArticle()
+    {
+
+        $this->user_id = Yii::$app->user->id;
+        return $this->save();
+    }
+
 }
