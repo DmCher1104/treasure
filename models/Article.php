@@ -63,6 +63,11 @@ class Article extends ActiveRecord
         return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
+
+    public function getComments()
+    {
+        return $this->hasMany(Comment::class, ['article_id' => 'id']);
+    }
     /**
      * @throws \yii\base\InvalidConfigException
      */
@@ -170,6 +175,12 @@ class Article extends ActiveRecord
 
         $this->user_id = Yii::$app->user->id;
         return $this->save();
+    }
+
+    public function getArticleComments(){
+
+
+        return $this->getComments()->where(['status'=>1])->all();
     }
 
 }

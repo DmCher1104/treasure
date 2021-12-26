@@ -6,9 +6,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 
-/**
- * admin module definition class
- */
+
 class Module extends \yii\base\Module
 {
 

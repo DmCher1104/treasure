@@ -4,8 +4,8 @@ namespace app\controllers;
 
 use app\models\Article;
 use app\models\Category;
+use app\models\CommentForm;
 use app\models\ContactForm;
-use app\models\SignupForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -89,16 +89,21 @@ class SiteController extends Controller
     {
         $article = Article::find()->where(['id' => $id])->one();
 
-
         $popular_articles = Article::getPopular();
         $last_articles = Article::getLast();
         $categories = Category::getAll();
+
+        $comments = $article->getArticleComments();
+        $comment_form = new CommentForm();
+
 
         return $this->render('single-post', [
             'article' => $article,
             'popular_articles' => $popular_articles,
             'last_articles' => $last_articles,
             'categories' => $categories,
+            'comments' => $comments,
+            'comment_form' => $comment_form,
         ]);
     }
 
@@ -119,5 +124,18 @@ class SiteController extends Controller
             'categories' => $categories,
 
         ]);
+    }
+
+    public function actionComment($id){
+        $model = new CommentForm();
+
+        if (Yii::$app->request->isPost){
+            $model->load(Yii::$app->request->post());
+            if ($model->saveComment($id)){
+
+                Yii::$app->getSession()->setFlash('comment', 'Your comment will confirmed soon :)');
+                return $this->redirect(['site/view', 'id'=>$id]);
+            }
+        }
     }
 }
