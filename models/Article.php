@@ -68,6 +68,12 @@ class Article extends ActiveRecord
     {
         return $this->hasMany(Comment::class, ['article_id' => 'id']);
     }
+
+    public function getAuthor()
+    {
+        return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
     /**
      * @throws \yii\base\InvalidConfigException
      */
@@ -177,10 +183,15 @@ class Article extends ActiveRecord
         return $this->save();
     }
 
-    public function getArticleComments(){
+    public function getArticleComments()
+    {
+        return $this->getComments()->where(['status' => 1])->all();
+    }
 
+    public function viewedCounter(){
 
-        return $this->getComments()->where(['status'=>1])->all();
+        $this->viewed +=1;
+        return $this->save(false);
     }
 
 }

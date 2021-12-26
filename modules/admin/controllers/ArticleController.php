@@ -54,7 +54,7 @@ class ArticleController extends Controller
     {
         $model = new Article();
 
-        if ($model->load($this->request->post()) && $model->save()) {
+        if ($model->load($this->request->post()) && $model->saveArticle()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
