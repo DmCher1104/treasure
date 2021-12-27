@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -12,10 +13,11 @@ use yii\web\IdentityInterface;
  * @property string|null $password
  * @property int|null $isAdmin
  * @property string|null $photo
+ * @property string|null $auth_key
  *
  * @property Comment[] $comments
  */
-class User extends ActiveRecord  implements IdentityInterface
+class User extends ActiveRecord implements IdentityInterface
 {
 
     public static function tableName()
@@ -66,7 +68,7 @@ class User extends ActiveRecord  implements IdentityInterface
 
     public static function findByEmail($email)
     {
-        return User::find()->where(['email'=>$email])->one();
+        return User::find()->where(['email' => $email])->one();
     }
 
     public static function findIdentityByAccessToken($token, $type = null)
@@ -81,11 +83,26 @@ class User extends ActiveRecord  implements IdentityInterface
 
     public function getAuthKey()
     {
-
+        return $this->auth_key;
     }
 
     public function validateAuthKey($authKey)
     {
+        return $this->getAuthKey() === $authKey;
+    }
 
+    /**
+     * Generates "remember me" authentication key
+     * @throws \yii\base\Exception
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($this->isNewRecord) {
+                $this->auth_key = \Yii::$app->security->generateRandomString();
+            }
+            return true;
+        }
+        return false;
     }
 }

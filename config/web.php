@@ -21,10 +21,10 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
-//            'enableSession'=>true,
-            'enableAutoLogin' => true,
+//            'enableSession'=>false,
             'loginUrl' =>['auth/login'] ,
+            'enableAutoLogin' => true,
+            'identityClass' => 'app\models\User',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

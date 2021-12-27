@@ -25,7 +25,7 @@ use yii\helpers\ArrayHelper;
 class Article extends ActiveRecord
 {
 
-    public static function tableName(): string
+    public static function tableName()
     {
         return 'article';
     }
@@ -173,7 +173,7 @@ class Article extends ActiveRecord
 
     public static function getLast()
     {
-        return Article::find()->orderBy('viewed desc')->limit(3)->all();
+        return Article::find()->orderBy('date desc')->limit(3)->all();
     }
 
     public function saveArticle()
