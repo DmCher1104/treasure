@@ -14,11 +14,17 @@ use yii\web\IdentityInterface;
  * @property int|null $isAdmin
  * @property string|null $photo
  * @property string|null $auth_key
+ * @property string|null $email_confirm_token
+ * @property string|null $status
  *
  * @property Comment[] $comments
  */
 class User extends ActiveRecord implements IdentityInterface
 {
+
+    const STATUS_ACTIVE = 1;
+    const STATUS_WAIT = 5;
+    const STATUS_DELETED = 3;
 
     public static function tableName()
     {
@@ -30,6 +36,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             [['isAdmin'], 'integer'],
             [['name', 'email', 'password', 'photo'], 'string', 'max' => 255],
+            ['status', 'in', 'range' => [self::STATUS_DELETED, self::STATUS_WAIT, self::STATUS_ACTIVE]],
         ];
     }
 
@@ -42,6 +49,7 @@ class User extends ActiveRecord implements IdentityInterface
             'password' => 'Password',
             'isAdmin' => 'Is Admin',
             'photo' => 'Photo',
+            'status' => 'Status',
         ];
     }
 
@@ -95,6 +103,7 @@ class User extends ActiveRecord implements IdentityInterface
      * Generates "remember me" authentication key
      * @throws \yii\base\Exception
      */
+
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
@@ -104,5 +113,11 @@ class User extends ActiveRecord implements IdentityInterface
             return true;
         }
         return false;
+    }
+
+    public static function findByUsername($name)
+    {
+//        return static::findOne(['username' => $username]);
+        return self::findOne(['name' => $name]);
     }
 }

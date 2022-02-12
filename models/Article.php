@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\data\Pagination;
+use yii\data\Sort;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
@@ -154,16 +155,34 @@ class Article extends ActiveRecord
 
     public static function getAll($pageSize = 3)
     {
+        $sort = new Sort([
+            'attributes' => [
+                'viewed'=>[
+                    'label'=>'Просмотров'
+                ],
+                'name' => [
+                    'asc' => ['title' => SORT_ASC],
+                    'desc' => ['title' => SORT_DESC],
+                    'default' => SORT_DESC,
+                    'label' => 'Тема',
+                ],
+                'date'=>[
+                    'label'=>'Дата'
+                ],
+            ],
+        ]);
+
         $query = Article::find();
 
         $countQuery = clone $query;
         $pagination = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => $pageSize]);
-
+        $pagination->pageSizeParam = false;
         $articles = $query->offset($pagination->offset)
             ->limit($pagination->limit)
+            ->orderBy($sort->orders)
             ->all();
 
-        return ['articles' => $articles, 'pagination' => $pagination];
+        return ['articles' => $articles, 'pagination' => $pagination, 'sort'=>$sort];
     }
 
     public static function getPopular()

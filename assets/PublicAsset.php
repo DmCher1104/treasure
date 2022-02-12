@@ -21,7 +21,9 @@ class PublicAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         "public/css/bootstrap.min.css",
-        "public/css/font-awesome.min.css",
+//        "public/css/font-awesome.min.css",
+        "public/css/all.css",
+//        "public/font-awesome4/css/font-awesome.min.css",
         "public/css/animate.min.css",
         "public/css/owl.carousel.css",
         "public/css/owl.theme.css",
@@ -30,7 +32,7 @@ class PublicAsset extends AssetBundle
         "public/css/responsive.css",
     ];
     public $js = [
-        //        "public/js/jquery-1.11.3.min.js",
+                "public/js/jquery-1.11.3.min.js",
         "public/js/bootstrap.min.js",
         "public/js/owl.carousel.min.js",
         "public/js/jquery.stickit.min.js",
@@ -38,6 +40,5 @@ class PublicAsset extends AssetBundle
         "public/js/scripts.js",
     ];
     public $depends = [
-
     ];
 }

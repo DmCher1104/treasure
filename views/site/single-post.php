@@ -37,19 +37,20 @@ use yii\helpers\Url;
                         </div>
 
                         <!--                        ВЫВОД ТЭГОВ сделать !!!!!!!!!!!-->
+
                         <div class="decoration">
                             <a href="#" class="btn btn-default">Decoration4444</a>
                         </div>
+
 
                         <div class="social-share">
 							<span
                                     class="social-share-title pull-left text-capitalize">By <?=$article->author->name ?> on <?= $article->getDate() ?></span>
                             <ul class="text-center pull-right">
-                                <li><a class="s-facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a class="s-twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a class="s-google-plus" href="#"><i class="fa fa-google-plus"></i></a></li>
-                                <li><a class="s-linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a class="s-instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+                                <li><a class="s-facebook" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                <li><a class="s-twitter" href="#"><i class="fab fa-youtube"></i></a></li>
+                                <li><a class="s-linkedin" href="#"><i class="fab fa-odnoklassniki"></i></a></li>
+                                <li><a class="s-instagram" href="#"><i class="fab fa-instagram"></i></a></li>
                             </ul>
                         </div>
                     </div>

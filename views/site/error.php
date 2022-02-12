@@ -1,4 +1,6 @@
 <!--main content start-->
+<?php $this->title = 'Not found page' ?>
+
 <div class="st-content">
     <div class="container">
         <div class="row">
@@ -24,6 +26,7 @@
                             </div>
 
                         </section><!-- .error-404 -->
+                        <?php // (\yii\helpers\Html::encode($message)) ?>
 
                     </main><!-- #main -->
                 </div><!-- #primary -->

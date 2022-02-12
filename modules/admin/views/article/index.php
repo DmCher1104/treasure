@@ -29,13 +29,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description:ntext',
-            'content:ntext',
+            'content:html',
+//            ['attribute' => 'content',
+//                'label' => 'content',
+////                'contentOptions' => ['style' => 'width:300px;'],
+//                'headerOptions' => ['style' => 'width:20%'],
+//            ],
             'date',
             [
                 'format' => 'html',
                 'label' => 'Image',
                 'value' => function ($data) {
-                    return Html::img($data->getImage(), ['width'=>220,]);
+                    return Html::img($data->getImage(), ['width' => 220,]);
                 }
             ],
             //'viewed',

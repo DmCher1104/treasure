@@ -1,5 +1,6 @@
 <?php
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use app\assets\PublicAsset;
@@ -16,6 +17,7 @@ PublicAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
+    <!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">-->
     <?php $this->head() ?>
 </head>
 <body class="d-flex flex-column h-100">
@@ -40,23 +42,22 @@ PublicAsset::register($this);
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav text-uppercase">
-                    <li><a data-toggle="dropdown" class="dropdown-toggle" href="/">Home</a>
-
-                    </li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="<?= Url::toRoute('site/about') ?>">About Us</a></li>
                 </ul>
                 <div class="i_con">
                     <ul class="nav navbar-nav text-uppercase">
-                        <?php if(Yii::$app->user->isGuest):?>
-                            <li><a href="<?= Url::toRoute(['auth/login'])?>">Login</a></li>
-                            <li><a href="<?= Url::toRoute(['signup/signup'])?>">Register</a></li>
+                        <?php if (Yii::$app->user->isGuest): ?>
+                            <li><a href="<?= Url::toRoute(['auth/login']) ?>">Login</a></li>
+                            <li><a href="<?= Url::toRoute(['signup/signup']) ?>">Register</a></li>
                         <?php else: ?>
                             <?= Html::beginForm(['/auth/logout'], 'post')
                             . Html::submitButton(
                                 'Logout (' . Yii::$app->user->identity->name . ')',
-                                ['class' => 'btn btn-link logout', 'style'=>"padding-top:20px;"]
+                                ['class' => 'btn btn-link logout', 'style' => "padding-top:20px;"]
                             )
                             . Html::endForm() ?>
-                        <?php endif;?>
+                        <?php endif; ?>
                     </ul>
                 </div>
 

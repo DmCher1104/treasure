@@ -52,8 +52,20 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $data = Article::getAll(2);
+//        $cache = Yii::$app->cache;
+//
+//        $key = 'get_all_articles';
+//        $cache->delete($key);
+//        $data = $cache->get($key);
+//        if ($data === false) {
+//            // $data нет в кэше, вычисляем заново
+//            $data = Article::find()->asArray()->all();;
+//
+//            // Сохраняем значение $data в кэше. Данные можно получить в следующий раз.
+//            $cache->set($key, $data);
+//        }
 
+        $data = Article::getAll(2);
         $popular_articles = Article::getPopular();
         $last_articles = Article::getLast();
         $categories = Category::getAll();
@@ -61,6 +73,7 @@ class SiteController extends Controller
         return $this->render('index', [
             'articles' => $data['articles'],
             'pages' => $data['pagination'],
+            'sort' => $data['sort'],
             'popular_articles' => $popular_articles,
             'last_articles' => $last_articles,
             'categories' => $categories,
@@ -87,7 +100,13 @@ class SiteController extends Controller
 
     public function actionView($id)
     {
+
+
         $article = Article::find()->where(['id' => $id])->one();
+        if (empty($article)){
+            throw new \yii\web\HttpException(404, 'The requested Item could not be found.');
+        }
+
 
         $popular_articles = Article::getPopular();
         $last_articles = Article::getLast();
@@ -126,16 +145,23 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionComment($id){
+    public function actionComment($id)
+    {
         $model = new CommentForm();
 
-        if (Yii::$app->request->isPost){
+        if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
-            if ($model->saveComment($id)){
+            if ($model->saveComment($id)) {
 
                 Yii::$app->getSession()->setFlash('comment', 'Your comment will confirmed soon :)');
-                return $this->redirect(['site/view', 'id'=>$id]);
+                return $this->redirect(['site/view', 'id' => $id]);
             }
         }
+    }
+
+    public function actionOffline(){
+
+        $this->layout = false;
+        return $this->render('offline');
     }
 }

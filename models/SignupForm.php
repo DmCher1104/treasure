@@ -23,14 +23,4 @@ class SignupForm extends Model
         ];
     }
 
-    public function signup(){
-        $user = new User();
-
-        $user->email =$this->email;
-        $user->name = $this->name;
-        $user->setPassword($this->password);
-
-       return $user->create();
-    }
-
 }

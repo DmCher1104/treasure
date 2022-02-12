@@ -36,7 +36,7 @@ YiiAsset::register($this);
             'id',
             'title',
             'description:ntext',
-            'content:ntext',
+            'content:html',
             'date',
             'image',
             'viewed',

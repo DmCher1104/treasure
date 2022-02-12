@@ -369,7 +369,7 @@ a.more-link:hover {
 }
 
 .social-share span a:hover {
-    color: #00BFF3;
+    color: #ff003d;
     text-decoration: none;
 }
 
@@ -568,7 +568,7 @@ subscribe newsletter
 }
 
 .btn-subscribe:hover {
-    background-color: #00BFF3;
+    background-color: #ff0000;
     color: #fff;
 }
 

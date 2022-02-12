@@ -3,10 +3,9 @@
 namespace app\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "comment".
- *
  * @property int $id
  * @property string|null $text
  * @property int|null $user_id
@@ -17,7 +16,7 @@ use Yii;
  * @property Article $article
  * @property User $user
  */
-class Comment extends \yii\db\ActiveRecord
+class Comment extends ActiveRecord
 {
 
     const STATUS_ALLOW = 1;
@@ -51,12 +50,12 @@ class Comment extends \yii\db\ActiveRecord
 
     public function getArticle()
     {
-        return $this->hasOne(Article::className(), ['id' => 'article_id']);
+        return $this->hasOne(Article::class, ['id' => 'article_id']);
     }
 
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
     public function getDate()

@@ -10,24 +10,30 @@ class AuthController extends Controller
 {
     public bool $enableAutoLogin = false;
 
-    public function actionLogin()
+
+        public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest){
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
-        $login_model = new LoginForm();
-
-        if (Yii::$app->request->isPost) {
-            if ($login_model->load(Yii::$app->request->post()) && $login_model->login()){
+        $model = new LoginForm();
+        if ($model->load(Yii::$app->request->post())) {
+            try{
+                if($model->login()){
+                    return $this->goBack();
+                }
+            } catch (\DomainException $e){
+                Yii::$app->session->setFlash('error', $e->getMessage());
                 return $this->goHome();
             }
         }
 
         return $this->render('login', [
-            'login_model' => $login_model,
+            'login_model' => $model,
         ]);
     }
+
 
     public function actionLogout()
     {
